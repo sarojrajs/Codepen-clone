@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import Editor from "./components/Editor";
-
+import './App.css'
 
 function App() {
   const [html,setHtml]=useState('')
   const [css,setCss]=useState('')
   const [javascript,setJavascript]=useState('')
   const [srcDoc,setSrcDoc]=useState('')
+  const [openFile,setOpenFile]=useState('index.html')
 
   useEffect(()=>{
       const timeout=setTimeout(()=>{
@@ -22,13 +23,30 @@ function App() {
   },[html,css,javascript])
 
   return (
-    <>
-    <div>
-    <Editor language='xml' displayName='HTML' value={html} onChange={setHtml}/>
-    <Editor language='css' displayName='CSS' value={css} onChange={setCss}/>
-    <Editor language='javascript' displayName='JAVASCRIPTS' value={javascript} onChange={setJavascript}/>
+    <div className='editor-full'>
+    <div className='editorPanel'>
+      <div className='editor-navigation'>
+        <h1 onClick={()=>{
+          setOpenFile('index.html')
+        }}>&#62; index.html</h1>
+        <h1 onClick={()=>{
+          setOpenFile('index.css')
+        }}>&#62; index.css</h1>
+        <h1 onClick={()=>{
+          setOpenFile('index.js')
+        }}>&#62; index.js</h1>
+      </div>
+      {
+        openFile==='index.html' && <Editor language='xml' displayName='index.html' value={html} onChange={setHtml} />
+      }
+      {
+        openFile==='index.css' && <Editor language='css' displayName='index.css' value={css} onChange={setCss}/>
+      }
+      {
+        openFile==='index.js' && <Editor language='javascript' displayName='index.js' value={javascript} onChange={setJavascript}/>
+      }
     </div>
-    <div>
+    <div className='live-screen'>
       <iframe
       srcDoc={srcDoc}
       title='output'
@@ -38,7 +56,7 @@ function App() {
       height='100%'
       />
     </div>
-    </>
+    </div>
        
   );
 }

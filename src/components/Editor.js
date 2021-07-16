@@ -12,10 +12,8 @@ function Editor({displayName,language,value,onChange}) {
     }
 
     return (
-        <div>
-            <div>
-                {displayName}
-            </div>
+        <div className='code-editor'>
+          <p className='code-file-name'>{displayName}</p>
             <Controlled
             onBeforeChange={handleChange}
             value={value}
